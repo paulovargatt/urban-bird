@@ -14,7 +14,7 @@ export class OfertasService {
 
 
   public getOfertas() {
-    return this.http.get(API+'?destaque=true')
+    return this.http.get(API+'/ofertas?destaque=true')
       .toPromise()
       .then((resposta: any) =>
         resposta
@@ -22,7 +22,7 @@ export class OfertasService {
   }
 
   public getOfertasCategoria(categoria: string){
-    return this.http.get(`${API}?categoria=${categoria}`)
+    return this.http.get(`${API}/ofertas?categoria=${categoria}`)
       .toPromise()
       .then((resposta: any) =>
          resposta
@@ -31,11 +31,28 @@ export class OfertasService {
 
   public getOfertaById(id){
     //shifit extrai posição do array;
-    return this.http.get(`${API}/${id}`)
+    return this.http.get(`${API}/ofertas/${id}`)
       .toPromise()
       .then((resposta: any) =>
         resposta
       );
+  }
+
+  public getComoUsarByID(id){
+    return this.http.get(API+'/como-usar?id='+id)
+      .toPromise()
+      .then((resposta: any) => {
+        return resposta[0].descricao
+      });
+  }
+
+  public getOndeFica(id){
+    return this.http.get(API+'/onde-fica?id='+id)
+      .toPromise()
+      .then((resposta: any) => {
+        console.log(resposta)
+        return resposta[0].descricao
+      });
   }
 
 

@@ -1,1 +1,1 @@
-export const API = 'http://localhost:3000/ofertas';
+export const API = 'http://localhost:3000';
