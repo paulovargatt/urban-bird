@@ -2,10 +2,11 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Oferta} from './shared/oferta.model';
 import 'rxjs/operator/toPromise';
+import {API} from './app.api';
+
 
 @Injectable()
 export class OfertasService {
-
 
   constructor(private http: HttpClient) {
 
@@ -13,7 +14,7 @@ export class OfertasService {
 
 
   public getOfertas() {
-    return this.http.get('http://localhost:3000/ofertas?destaque=true')
+    return this.http.get(API+'?destaque=true')
       .toPromise()
       .then((resposta: any) =>
         resposta
@@ -21,11 +22,21 @@ export class OfertasService {
   }
 
   public getOfertasCategoria(categoria: string){
-    return this.http.get(`http://localhost:3000/ofertas?categoria=${categoria}`)
+    return this.http.get(`${API}?categoria=${categoria}`)
       .toPromise()
       .then((resposta: any) =>
          resposta
       )
-;  }
+  }
+
+  public getOfertaById(id){
+    //shifit extrai posição do array;
+    return this.http.get(`${API}/${id}`)
+      .toPromise()
+      .then((resposta: any) =>
+        resposta
+      );
+  }
+
 
 }
