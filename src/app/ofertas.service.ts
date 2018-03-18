@@ -1,5 +1,6 @@
 import { Oferta } from './shared/oferta.model';
 import {reject} from 'q';
+import set = Reflect.set;
 
 export class OfertasService {
 
@@ -58,10 +59,28 @@ export class OfertasService {
      return this.ofertas;
   }
 
-  public getOfertas2(): Promise<Oferta[]>{
+  public getOfertas2(){
     return new Promise((resolve, reject) => {
-      resolve(this.ofertas)
-    });
+      let deu_certo = true;
+
+      if(deu_certo) {
+
+        setTimeout(() => resolve(
+            this.ofertas
+        ),1000)
+
+      }else{
+        reject({codigo_erro: 404, mensagem_erro: 'Servidor not found'})
+      }
+    })
+      .then((ofertas: Oferta[]) => {
+      console.log('primeiro then')
+        return ofertas
+      })
+      .then((ofertas) => {
+        console.log('segundo then')
+        return ofertas
+      });
   }
 
 }
