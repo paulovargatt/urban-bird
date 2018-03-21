@@ -17,9 +17,6 @@ import {Subscription} from 'rxjs/Subscription';
 export class OfertaComponent implements OnInit, OnDestroy {
 
   oferta;
-  private tempoObservableSubscription:Subscription
-  private meuObservableteste:Subscription
-
 
   constructor(private route: ActivatedRoute,
               public ofertasService: OfertasService) {
@@ -34,42 +31,9 @@ export class OfertaComponent implements OnInit, OnDestroy {
         this.oferta = oferta
       });
 
-/*
-    this.route.params.subscribe((param) => {
-      console.log(param)
-    },(error) => {
-      console.log(error)
-    },() => console.log('completeedd'))
   }
-*/
-
-    let tempo = Observable.interval(500)
-
-
-    this.tempoObservableSubscription = tempo.subscribe((interval) => {
-      console.log(interval)
-    })
-
-
-
-    let meuObservableTeste = Observable.create((observer) => {
-      observer.next(1)
-      observer.next(3)
-      observer.complete()
-      observer.error('erro in events')
-    });
-
-    this.meuObservableteste = meuObservableTeste.subscribe(
-      (resul) => console.log(resul),
-      (error) => console.log(error),
-      () => console.log('event finisg')
-    )
-
-  }
-
 
   ngOnDestroy() {
-    this.tempoObservableSubscription.unsubscribe()
-    this.tempoObservableSubscription.unsubscribe()
+
   }
 }
