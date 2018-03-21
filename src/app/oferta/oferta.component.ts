@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {OfertasService} from '../ofertas.service';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/Rx'
+import 'rxjs/Rx';
+import {Subscription} from 'rxjs/Subscription';
+
+
 @Component({
   selector: 'app-oferta',
   templateUrl: './oferta.component.html',
@@ -11,9 +14,12 @@ import 'rxjs/Rx'
     OfertasService
   ]
 })
-export class OfertaComponent implements OnInit {
+export class OfertaComponent implements OnInit, OnDestroy {
 
   oferta;
+  private tempoObservableSubscription:Subscription
+  private meuObservableteste:Subscription
+
 
   constructor(private route: ActivatedRoute,
               public ofertasService: OfertasService) {
@@ -36,22 +42,34 @@ export class OfertaComponent implements OnInit {
     },() => console.log('completeedd'))
   }
 */
-/*
-    let tempo = Observable.interval(5000)
-    tempo.subscribe((interval) => {
+
+    let tempo = Observable.interval(500)
+
+
+    this.tempoObservableSubscription = tempo.subscribe((interval) => {
       console.log(interval)
     })
-    */
+
 
 
     let meuObservableTeste = Observable.create((observer) => {
-      observer.next('primeiro evento')
+      observer.next(1)
+      observer.next(3)
+      observer.complete()
+      observer.error('erro in events')
     });
 
-    meuObservableTeste.subscribe(
-      (resul) => console.log(resul)
+    this.meuObservableteste = meuObservableTeste.subscribe(
+      (resul) => console.log(resul),
+      (error) => console.log(error),
+      () => console.log('event finisg')
     )
 
+  }
 
+
+  ngOnDestroy() {
+    this.tempoObservableSubscription.unsubscribe()
+    this.tempoObservableSubscription.unsubscribe()
   }
 }
